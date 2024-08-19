@@ -1,5 +1,4 @@
 import express from "express";
-import lodash from "lodash";
 
 const app = express();
 const port = 3111;

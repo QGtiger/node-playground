@@ -4,6 +4,7 @@ import { NodePlaygroundModel } from "./NodePlaygroundModel";
 
 import "allotment/dist/style.css";
 import CodeEditor from "./components/CodeEditor";
+import Preview from "./components/Preview";
 
 export default function NodePlayground() {
   return (
@@ -16,7 +17,9 @@ export default function NodePlayground() {
               <Allotment.Pane minSize={500}>
                 <CodeEditor />
               </Allotment.Pane>
-              <Allotment.Pane>预览</Allotment.Pane>
+              <Allotment.Pane>
+                <Preview />
+              </Allotment.Pane>
             </Allotment>
           </Allotment.Pane>
           <Allotment.Pane>console</Allotment.Pane>

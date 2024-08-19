@@ -8,6 +8,7 @@ import { useState } from "react";
 export const NodePlaygroundModel = createCustomModel(function () {
   const [files, setFiles] = useState<EditorFiles>(initfiles);
   const [currFileName, setCurrFileName] = useState(defaultEntryFileName);
+  const [devUrl, setDevUrl] = useState("");
 
   useMount(async () => {
     const webContainerIns = await WebContainer.boot();
@@ -22,9 +23,36 @@ export const NodePlaygroundModel = createCustomModel(function () {
       },
       {} as FileSystemTree
     );
-    webContainerIns.mount(fileSystemTree);
-    webContainerIns.fs.readFile("index.js", "utf-8").then((res) => {
-      console.log(res);
+    await webContainerIns.mount(fileSystemTree);
+
+    async function installDependencies() {
+      // Install dependencies
+      const installProcess = await webContainerIns.spawn("npm", ["install"]);
+      // Wait for install command to exit
+      return installProcess.exit;
+    }
+
+    const exitCode = await installDependencies();
+    console.log("=====exitCode=====", exitCode);
+    // installProcess.output.pipeTo(
+    //   new WritableStream({
+    //     write(data) {
+    //       console.log(data);
+    //     },
+    //   })
+    // );
+    const devProcess = await webContainerIns.spawn("npm", ["run", "start"]);
+    devProcess.output.pipeTo(
+      new WritableStream({
+        write(data) {
+          console.log(data);
+        },
+      })
+    );
+
+    // Wait for `server-ready` event
+    webContainerIns.on("server-ready", (port, url) => {
+      setDevUrl(url);
     });
   });
 
@@ -34,5 +62,6 @@ export const NodePlaygroundModel = createCustomModel(function () {
     files,
     setCurrFileName,
     setFiles,
+    devUrl,
   };
 });
