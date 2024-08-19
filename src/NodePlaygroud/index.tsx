@@ -16,7 +16,7 @@ export default function NodePlayground() {
               <Allotment.Pane>预览</Allotment.Pane>
             </Allotment>
           </Allotment.Pane>
-          <Allotment.Pane minSize={300}>console</Allotment.Pane>
+          <Allotment.Pane>console</Allotment.Pane>
         </Allotment>
       </NodePlaygroundModel.Provider>
     </div>
