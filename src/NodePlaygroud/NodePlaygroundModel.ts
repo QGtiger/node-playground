@@ -51,7 +51,8 @@ export const NodePlaygroundModel = createCustomModel(function () {
     );
 
     // Wait for `server-ready` event
-    webContainerIns.on("server-ready", (port, url) => {
+    webContainerIns.on("server-ready", (_, url) => {
+      console.log(_);
       setDevUrl(url);
     });
   });
