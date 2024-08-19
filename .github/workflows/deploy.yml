@@ -45,14 +45,14 @@ jobs:
         run: pnpm run build
       - name: Setup Pages
         uses: actions/configure-pages@v4
+      - name: Set up HTTP headers for cross-origin isolation
+        run: |
+          sed -i 's/<head>/<head>\n<meta http-equiv=\"Cross-Origin-Embedder-Policy\" content=\"require-corp\"><meta http-equiv=\"Cross-Origin-Opener-Policy\" content=\"same-origin\">/g' dist/*.html
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload dist folder
           path: "./dist"
-      - name: Set up HTTP headers for cross-origin isolation
-        run: |
-          sed -i 's/<head>/<head>\n<meta http-equiv=\"Cross-Origin-Embedder-Policy\" content=\"require-corp\"><meta http-equiv=\"Cross-Origin-Opener-Policy\" content=\"same-origin\">/g' dist/*.html
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
