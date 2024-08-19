@@ -19,5 +19,5 @@ export default defineConfig({
       },
     ],
   },
-  base: process.env.NODE_ENV === "development" ? "/" : "/node-playground/",
+  // base: process.env.NODE_ENV === "development" ? "/" : "/node-playground/",
 });
