@@ -1,16 +1,24 @@
-import type { FileSystemTree } from "@webcontainer/api";
 import IndexJsRaw from "./template/index.js?raw";
 import PackageJsonRaw from "./template/package.json?raw";
 
-export const files: FileSystemTree = {
-  "index.js": {
-    file: {
-      contents: IndexJsRaw,
-    },
+export type EditorFile = {
+  value: string;
+  buildIn?: boolean;
+};
+
+export interface EditorFiles {
+  [x: string]: EditorFile;
+}
+
+export const defaultEntryFileName = "index.js";
+
+export const initfiles: EditorFiles = {
+  [defaultEntryFileName]: {
+    value: IndexJsRaw,
+    buildIn: true,
   },
   "package.json": {
-    file: {
-      contents: PackageJsonRaw,
-    },
+    value: PackageJsonRaw,
+    buildIn: true,
   },
 };

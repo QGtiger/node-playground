@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import { NodePlaygroundModel } from "./NodePlaygroundModel";
 
 import "allotment/dist/style.css";
+import CodeEditor from "./components/CodeEditor";
 
 export default function NodePlayground() {
   return (
@@ -12,7 +13,9 @@ export default function NodePlayground() {
         <Allotment vertical>
           <Allotment.Pane>
             <Allotment defaultSizes={[100]}>
-              <Allotment.Pane minSize={500}>代码编辑区域</Allotment.Pane>
+              <Allotment.Pane minSize={500}>
+                <CodeEditor />
+              </Allotment.Pane>
               <Allotment.Pane>预览</Allotment.Pane>
             </Allotment>
           </Allotment.Pane>
