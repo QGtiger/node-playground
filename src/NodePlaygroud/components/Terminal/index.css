@@ -4,5 +4,5 @@
 }
 
 .xterm-viewport {
-  overflow-y: auto !important;
+  overflow-y: hidden !important;
 }
