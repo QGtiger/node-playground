@@ -97,6 +97,20 @@ export const NodePlaygroundModel = createCustomModel(function () {
     );
     await webContainerIns.mount(fileSystemTree);
 
+    const directoryToWatch = "/";
+    webContainerIns.fs.watch(directoryToWatch, async (event, filename) => {
+      if (filename && typeof filename === "string") {
+        const filePath = directoryToWatch + filename;
+        if (event === "change") {
+          setFileValue(
+            filename,
+            await webContainerIns.fs.readFile(filePath, "utf-8"),
+            false
+          );
+        }
+      }
+    });
+
     // terminalIns.write("Installing dependencies...\n");
     // await installDependencies(webContainerIns, terminalIns);
 
@@ -131,12 +145,24 @@ export const NodePlaygroundModel = createCustomModel(function () {
     });
   };
 
-  const setFileValue = (fileName: string, value: string) => {
+  const setFileValue = (
+    fileName: string,
+    value: string,
+    fsWrite: boolean = true
+  ) => {
     setFiles((prev) => {
+      if (!prev[fileName]) {
+        prev[fileName] = {
+          value,
+          buildIn: false,
+        };
+      }
       prev[fileName].value = value;
       return { ...prev };
     });
-    webContainerInsRef.current?.fs.writeFile(fileName, value);
+    if (fsWrite) {
+      webContainerInsRef.current?.fs.writeFile(fileName, value);
+    }
   };
 
   return {
