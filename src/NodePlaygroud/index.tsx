@@ -5,6 +5,7 @@ import { NodePlaygroundModel } from "./NodePlaygroundModel";
 import "allotment/dist/style.css";
 import CodeEditor from "./components/CodeEditor";
 import Preview from "./components/Preview";
+import TerminalConsole from "./components/Terminal";
 
 export default function NodePlayground() {
   return (
@@ -22,7 +23,9 @@ export default function NodePlayground() {
               </Allotment.Pane>
             </Allotment>
           </Allotment.Pane>
-          <Allotment.Pane>console</Allotment.Pane>
+          <Allotment.Pane>
+            <TerminalConsole />
+          </Allotment.Pane>
         </Allotment>
       </NodePlaygroundModel.Provider>
     </div>

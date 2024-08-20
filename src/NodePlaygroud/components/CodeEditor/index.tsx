@@ -6,14 +6,13 @@ import { NodePlaygroundModel } from "../../NodePlaygroundModel";
 import { getLanguageByFileName } from "../../utils";
 
 export default function CodeEditor() {
-  const { currFile, currFileName, setFiles, files } =
+  const { currFile, currFileName, setFileValue } =
     NodePlaygroundModel.useModel();
 
   const { run: onEditorChange, cancel } = useDebounceFn(
     (value: string) => {
       if (value !== currFile.value) {
-        currFile.value = value!;
-        setFiles({ ...files });
+        setFileValue(currFileName, value);
       }
     },
     {
