@@ -79,8 +79,11 @@ export const NodePlaygroundModel = createCustomModel(function () {
 
     fitAddon.fit();
 
-    const webContainerIns = (webContainerInsRef.current =
-      await WebContainer.boot());
+    const webContainerIns =
+      // @ts-expect-error webcontainerInstance is a global variable
+      (window["webcontainerInstance"] =
+      webContainerInsRef.current =
+        await WebContainer.boot());
     const fileSystemTree: FileSystemTree = Object.keys(files).reduce(
       (acc, key) => {
         acc[key] = {
@@ -101,6 +104,7 @@ export const NodePlaygroundModel = createCustomModel(function () {
     webContainerIns.fs.watch(directoryToWatch, async (event, filename) => {
       if (filename && typeof filename === "string") {
         const filePath = directoryToWatch + filename;
+        console.log("File changed:", filePath);
         if (event === "change") {
           setFileValue(
             filename,
@@ -128,6 +132,7 @@ export const NodePlaygroundModel = createCustomModel(function () {
     // Wait for `server-ready` event
     webContainerIns.on("server-ready", (_, url) => {
       setDevUrl(url);
+      console.log("开放接口为:", url);
     });
 
     terminalShellProcessRef.current = await startShell(

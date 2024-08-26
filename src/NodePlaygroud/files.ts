@@ -21,4 +21,12 @@ export const initfiles: EditorFiles = {
     value: PackageJsonRaw,
     buildIn: true,
   },
+  "test.js": {
+    value: "",
+    buildIn: true,
+  },
+  "module.js": {
+    value: "",
+    buildIn: true,
+  },
 };

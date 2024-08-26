@@ -25,7 +25,7 @@ export default function CodeEditor() {
   }, [currFileName, cancel]);
 
   return (
-    <div className="h-full">
+    <div className="h-full flex flex-col">
       <FileList />
       <Editor
         file={currFile}
